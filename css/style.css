@@ -146,39 +146,13 @@ body {
   padding: 2px 0;
 }
 
-/* メニューアイコンセクション（互い違い配置） */
-.menu-section {
-  display: flex;
-  flex-direction: column;
-  padding: 60px 15%;
-}
+/*menu*/
 
-.menu-item {
-  width: 220px;
-}
 
 .menu-item a {
   text-decoration: none;
   color: inherit;
   display: block;
-}
-
-/* 互い違いの配置 */
-.-work { 
-  align-self: flex-start;
-  margin-top: -30px; /* 上のWORKに30px重なるように引き上げる */
-  z-index: 2;
- }
-
-.-about {
-  align-self: flex-end;
-  margin-top: -30px; /* 上のABOUTに30px重なるように引き上げる */
-  z-index: 3;
-   }
-
-.-contact { 
-  align-self: flex-start;
-  z-index: 1;
 }
 
 .icon-item, .menu-item, .icon-card, .icon-item a {
@@ -442,7 +416,7 @@ body {
 
 /* info-groupは　Web詳細ページのみ */
 .info-group-web {
-  margin: 0 10rem;
+  /* margin: 0 10rem; */
   font-size: 0.9rem;
 }
 
@@ -461,7 +435,7 @@ body {
 
 /* info-groupは　Web詳細ページ以外 */
 .info-group {
-  margin: 0 3rem;
+  /* margin: 0 3rem; */
   font-size: 0.9rem;
 }
 
@@ -938,13 +912,54 @@ textarea:focus {
 }
 
 .detail-hero-flex {
-display: flex;
-    flex-direction: row;    /* 横並び */
-    justify-content: center; /* 【重要】子要素（画像）を左右中央に寄せる */
-    gap: 30px;              /* 画像同士の隙間 */
-    width: 100%;            /* 【重要】幅を100%にして中央配置の基準を作る */
-    margin: 40px 0;
+  display: flex;
+  flex-direction: row;    /* 横並び */
+  justify-content: center; /* 【重要】子要素（画像）を左右中央に寄せる */
+  gap: 30px;              /* 画像同士の隙間 */
+  width: 100%;            /* 【重要】幅を100%にして中央配置の基準を作る */
+  margin: 40px 0;
 }
+
+/* メニューアイコンセクション（互い違い配置） */
+.menu-section {
+  display: flex;
+  flex-direction: column;
+  padding: 60px 15%;
+}
+
+/* .menu-item {
+  width: 220px;
+} */
+
+
+
+/* 互い違いの配置 */
+.-work { 
+  align-self: flex-start;
+  margin-top: -30px; /* 上のWORKに30px重なるように引き上げる */
+  z-index: 2;
+ }
+
+.-about {
+  align-self: flex-end;
+  margin-top: -30px; /* 上のABOUTに30px重なるように引き上げる */
+  z-index: 3;
+   }
+
+.-contact { 
+  align-self: flex-start;
+  z-index: 1;
+}
+
+/* work */
+.info-group-web {
+  margin: 0 10rem;
+}
+
+.info-group {
+  margin: 0 3rem;
+}
+
 
 /* about */
 .flip-container {
@@ -1020,6 +1035,11 @@ display: flex;
     background: url('../images/top-illustration-color2.png') no-repeat center center / contain;
   }
 
+  /* work */
+  .info-group-web,.info-group {
+  margin: 0 1rem;
+}
+
   /* --- 3. ハンバーガーボタン（二本線） --- */
   .nav-toggle {
     display: block !important;
@@ -1090,6 +1110,12 @@ display: flex;
   }
 
   /* --- 5. コンテンツの微調整 --- */
+  .menu-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .detail-hero-flex {
     display: flex;
    flex-direction: column; /* スマホでは縦に並べる場合 */
@@ -1124,7 +1150,7 @@ display: flex;
 
   /* about */
 .flip-container {
-    margin-bottom: 230px;
+    margin-bottom: 280px;
 }
 
 }
