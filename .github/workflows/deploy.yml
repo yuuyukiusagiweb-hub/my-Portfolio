@@ -35,6 +35,11 @@ jobs:
           cd deploy_root
           zip -r ../site.zip .
 
+      - name: Debug deploy values
+        run: |
+          printf 'DEPLOY_URL=[%s]\n' "$DEPLOY_URL"
+          printf 'DEPLOY_SITE_ID=[%s]\n' "$DEPLOY_SITE_ID"
+
       - name: Create signed request
         id: sign
         env:
