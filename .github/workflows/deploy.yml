@@ -9,10 +9,6 @@ on:
 permissions:
   contents: read
 
-env:
-  DEPLOY_URL: https://human.sakuraweb.com/__deploy_9f3x.php
-  DEPLOY_SITE_ID: st-10
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -28,22 +24,17 @@ jobs:
           rsync -av --delete \
             --exclude ".git" \
             --exclude ".github" \
-            --exclude "node_modules" \
             --exclude ".DS_Store" \
             --exclude "deploy_root" \
             ./ deploy_root/
           cd deploy_root
           zip -r ../site.zip .
 
-      - name: Debug deploy values
-        run: |
-          printf 'DEPLOY_URL=[%s]\n' "$DEPLOY_URL"
-          printf 'DEPLOY_SITE_ID=[%s]\n' "$DEPLOY_SITE_ID"
-
       - name: Create signed request
         id: sign
         env:
           DEPLOY_SECRET: ${{ secrets.DEPLOY_SECRET }}
+          DEPLOY_SITE_ID: ${{ secrets.DEPLOY_SITE_ID }}
         run: |
           test -n "$DEPLOY_SECRET"
           test -n "$DEPLOY_SITE_ID"
@@ -60,6 +51,8 @@ jobs:
 
       - name: Deploy
         env:
+          DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
+          DEPLOY_SITE_ID: ${{ secrets.DEPLOY_SITE_ID }}
           TIMESTAMP: ${{ steps.sign.outputs.timestamp }}
           NONCE: ${{ steps.sign.outputs.nonce }}
           SIGNATURE: ${{ steps.sign.outputs.signature }}
