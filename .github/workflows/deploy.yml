@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+env:
+  DEPLOY_URL: https://human.sakuraweb.com/__deploy_9f3x.php
+  DEPLOY_SITE_ID: st-10
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -24,6 +28,7 @@ jobs:
           rsync -av --delete \
             --exclude ".git" \
             --exclude ".github" \
+            --exclude "node_modules" \
             --exclude ".DS_Store" \
             --exclude "deploy_root" \
             ./ deploy_root/
@@ -34,7 +39,6 @@ jobs:
         id: sign
         env:
           DEPLOY_SECRET: ${{ secrets.DEPLOY_SECRET }}
-          DEPLOY_SITE_ID: ${{ secrets.DEPLOY_SITE_ID }}
         run: |
           test -n "$DEPLOY_SECRET"
           test -n "$DEPLOY_SITE_ID"
@@ -51,13 +55,12 @@ jobs:
 
       - name: Deploy
         env:
-          DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
-          DEPLOY_SITE_ID: ${{ secrets.DEPLOY_SITE_ID }}
           TIMESTAMP: ${{ steps.sign.outputs.timestamp }}
           NONCE: ${{ steps.sign.outputs.nonce }}
           SIGNATURE: ${{ steps.sign.outputs.signature }}
         run: |
           test -n "$DEPLOY_URL"
+          test -n "$DEPLOY_SITE_ID"
           curl --fail-with-body --silent --show-error \
             -X POST "$DEPLOY_URL" \
             -H "X-Deploy-Timestamp: $TIMESTAMP" \
