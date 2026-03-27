@@ -1111,21 +1111,21 @@ textarea:focus {
 
   /* --- 5. コンテンツの微調整 --- */
   .menu-section{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 50px;
+    display: flex ;
+    flex-direction: column ;
+    align-items: center ;
+    gap: 50px ;
   }
 
   .detail-hero-flex {
-    display: flex;
-   flex-direction: column; /* スマホでは縦に並べる場合 */
-   align-items: center;
-   gap: 20px;
-   width: 100%;
-   max-width: 250px;
-   margin: 0 auto 40px ;
-   padding: 0;
+    display: flex ;
+   flex-direction: column ; /* スマホでは縦に並べる場合 */
+   align-items: center ;
+   gap: 20px ;
+   width: 100% ;
+   max-width: 250px ;
+   margin: 0 auto 40px  ;
+   padding: 0 ;
  }
 
  .hero-img-item {
@@ -1145,13 +1145,13 @@ textarea:focus {
   }
 
   .submit-btn {
-    width: 100%;
+    width: 100% ;
   }
 
 
   /* about */
 .flip-container {
-    margin-bottom: 290px;
+    margin-bottom: 290px ;
 }
 
 }
