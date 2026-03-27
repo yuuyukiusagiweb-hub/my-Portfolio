@@ -34,47 +34,34 @@ jobs:
         id: sign
         env:
           DEPLOY_SECRET: ${{ secrets.DEPLOY_SECRET }}
+          DEPLOY_SITE_ID: ${{ secrets.DEPLOY_SITE_ID }}
         run: |
-          set -eu
-          SITE_ID="st-10"
           test -n "$DEPLOY_SECRET"
-
-          printf 'SIGN_SITE_ID=[%s]\n' "$SITE_ID"
-
+          test -n "$DEPLOY_SITE_ID"
           TIMESTAMP="$(date +%s)"
           NONCE="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-$(git rev-parse --short HEAD)"
           ARCHIVE_SHA256="$(sha256sum site.zip | awk '{print $1}')"
-          PAYLOAD="${TIMESTAMP}\n${NONCE}\n${SITE_ID}\n${ARCHIVE_SHA256}"
+          PAYLOAD="${TIMESTAMP}\n${NONCE}\n${DEPLOY_SITE_ID}\n${ARCHIVE_SHA256}"
           SIGNATURE="sha256=$(printf '%b' "$PAYLOAD" | openssl dgst -sha256 -hmac "$DEPLOY_SECRET" -hex | sed 's/^.* //')"
-
           {
             echo "timestamp=$TIMESTAMP"
             echo "nonce=$NONCE"
             echo "signature=$SIGNATURE"
-            echo "site_id=$SITE_ID"
           } >> "$GITHUB_OUTPUT"
 
       - name: Deploy
         env:
           DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
-          SITE_ID: ${{ steps.sign.outputs.site_id }}
+          DEPLOY_SITE_ID: ${{ secrets.DEPLOY_SITE_ID }}
           TIMESTAMP: ${{ steps.sign.outputs.timestamp }}
           NONCE: ${{ steps.sign.outputs.nonce }}
           SIGNATURE: ${{ steps.sign.outputs.signature }}
         run: |
-          set -eu
           test -n "$DEPLOY_URL"
-          test -n "$SITE_ID"
-
-          printf 'DEPLOY_URL=[%s]\n' "$DEPLOY_URL"
-          printf 'SITE_ID=[%s]\n' "$SITE_ID"
-          printf 'TIMESTAMP=[%s]\n' "$TIMESTAMP"
-          printf 'NONCE=[%s]\n' "$NONCE"
-
           curl --fail-with-body --silent --show-error \
             -X POST "$DEPLOY_URL" \
             -H "X-Deploy-Timestamp: $TIMESTAMP" \
             -H "X-Deploy-Nonce: $NONCE" \
             -H "X-Deploy-Signature: $SIGNATURE" \
-            --form-string "site_id=$SITE_ID" \
+            -F "site_id=$DEPLOY_SITE_ID" \
             -F "archive=@site.zip;type=application/zip"
