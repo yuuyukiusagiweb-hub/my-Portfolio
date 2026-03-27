@@ -1037,7 +1037,7 @@ textarea:focus {
 
   /* work */
   .info-group-web,.info-group {
-  margin: 0 1rem;
+  margin: 0 1rem ;
 }
 
   /* --- 3. ハンバーガーボタン（二本線） --- */
@@ -1111,10 +1111,10 @@ textarea:focus {
 
   /* --- 5. コンテンツの微調整 --- */
   .menu-section{
-    display: flex ;
-    flex-direction: column ;
-    align-items: center ;
-    gap: 50px ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
   }
 
   .detail-hero-flex {
