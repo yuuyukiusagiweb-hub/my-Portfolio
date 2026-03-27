@@ -34,7 +34,7 @@ jobs:
         id: sign
         env:
           DEPLOY_SECRET: ${{ secrets.DEPLOY_SECRET }}
-          DEPLOY_SITE_ID: ${{ secrets.DEPLOY_SITE_ID }}
+          DEPLOY_SITE_ID: ${{ vars.DEPLOY_SITE_ID }}
         run: |
           set -eu
           test -n "$DEPLOY_SECRET"
@@ -57,7 +57,7 @@ jobs:
       - name: Deploy
         env:
           DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
-          DEPLOY_SITE_ID: ${{ secrets.DEPLOY_SITE_ID }}
+          DEPLOY_SITE_ID: ${{ vars.DEPLOY_SITE_ID }}
           TIMESTAMP: ${{ steps.sign.outputs.timestamp }}
           NONCE: ${{ steps.sign.outputs.nonce }}
           SIGNATURE: ${{ steps.sign.outputs.signature }}
