@@ -145,10 +145,6 @@ body {
   background: white; /* 線の上に文字を出すため */
   padding: 2px 0;
 }
-
-/*menu*/
-
-
 .menu-item a {
   text-decoration: none;
   color: inherit;
